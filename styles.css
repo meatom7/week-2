@@ -13,6 +13,8 @@ body {display: grid;
     font-size: 100%;}
 header{
 position: relative;
+padding: 20px;
+margin: 3px;
 }
 span.lines>img {
     max-width: 70px;
@@ -23,7 +25,7 @@ grid-area: 1/1/span 3/2;
 flex-flow: column nowrap;  
 /* justify-content: space-around; */
 height: 85%;
-
+padding: 20px;
 }
 .left_box {
     box-shadow:  0px 6px 5px #0000008a;
@@ -75,6 +77,59 @@ a.btn-primary {
     justify-content: center;
     margin: 0px 10px;
 }
+a.btn-primary {
+    background-color: #CF69FF;
+    border-radius: 82px;
+    box-shadow: -1px 3px 3px 2px #0000008a;
+    /* max-width: 250px; */
+    max-height: 60px;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px 10px;
+    color: white;
+    font-weight: 900;
+    margin: 15px 5px;
+    box-shadow: inset 1px -1px 3px 3px #0000008a
+}
+section.card {
+    display: flex;
+    width: 100%;
+flex-flow: row wrap;
+}
+a.btn-secondary {
+    background-color: #ffffff;
+    border-radius: 82px;
+    box-shadow: -1px 3px 3px 2px #0000008a;
+    border-color: black;
+    border: 2px;
+    max-height: 60px;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px 10px;
+    color: rgb(0, 0, 0);
+    font-weight: 900;
+    margin: 15px 5px;
+    box-shadow: inset 1px -1px 3px 3px #0000008a
+}
+span.lines {
+width: 100%;
+flex-wrap: nowrap;
+    display: flex;
+}
+span.lines>input {
+    width: 100%;
+    border: none;
+    font-size: 1.5em;
+    padding: 20px;
+}
+span.bbts {
+    flex-wrap: nowrap;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
 article {
     contain: content;
     display: flex;
@@ -124,8 +179,9 @@ section.trendContent>ul {
 }
 section.capsule {
     border-radius: 10px;
-    background-color: aliceblue;
-    display: inline-flex; 
+    background-color: w;
+    display: inline-flex;
+    contain: content; 
 }
 section.capsule>img {
     max-width: 73px;
