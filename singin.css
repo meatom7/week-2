@@ -10,6 +10,10 @@ h1 {
     font-size: 3em;
 
 }
+header>img {
+    max-width: 70px;
+    margin-left: 45px;
+    }
 input {
     border: 1px;  
     max-height: 161px;
@@ -72,5 +76,22 @@ span>img {
     max-height: 40px;
     padding: 25px
 
+}
+}
+@media only screen and (min-width: 600px) {
+    span>img {
+    top: 5%;
+    position: relative;
+    max-height: 40px;
+    padding: 25px
+
+}
+input {
+    border: 1px;  
+    max-height: 161px;
+    background-color: #F6F6F6;
+    padding: 40px;
+    font-size: 1.3em;
+    width: 70vw;
 }
 }
