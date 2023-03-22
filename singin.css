@@ -1,0 +1,67 @@
+main {
+    display: flex;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    flex-flow: column wrap;
+    text-align: center;
+}
+h1 {
+    font-size: 3em;
+
+}
+input {
+    border: 1px;  
+    max-height: 161px;
+    background-color: #F6F6F6;
+    padding: 40px;
+    font-size: 1.3em;
+}
+a.btn {
+    border-radius: 185px;
+    max-height: 105px;
+    font: 1.3em sans-serif;
+    padding: 15px;
+    justify-content: center;
+    display: flex;
+}
+a.btn-primary {
+    background-color: #CF69FF;
+    border-radius: 82px;
+    box-shadow: -1px 3px 3px 2px #0000008a;
+    /* max-width: 250px; */
+    max-height: 60px;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px 10px;
+    color: white;
+    font-weight: 900;
+    margin: 15px 5px;
+    box-shadow: inset 1px -1px 3px 3px #0000008a
+}
+a.drk {
+    background-color: black;
+}
+a.btn-secondary {
+    background-color: #ffffff;
+    border-radius: 82px;
+    box-shadow: -1px 3px 3px 2px #0000008a;
+    border-color: black;
+    border: 2px;
+    max-height: 60px;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px 10px;
+    color: rgb(0, 0, 0);
+    font-weight: 900;
+    margin: 15px 5px;
+    box-shadow: inset 1px -1px 3px 3px #0000008a
+}
+span>img {
+    top: 5%;
+    position: relative;
+    max-height: 40px;
+    padding: 15px
+}
