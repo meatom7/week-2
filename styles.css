@@ -89,6 +89,9 @@ article {
     border-radius: 5px;
     position: relative;
     }
+    span.hashes {
+        color: #BA00FC;
+    }
 aside {
     grid-area: 1/3/span 3/4;
     flex-flow: column nowrap; 
