@@ -31,14 +31,14 @@
       <input
         type="text"
         name=""
-        id="usernum"
+        id="usernumber"
         class="textbox userfield"
         placeholder="Insert phone number"
       />
       <input
-        type="text"
+        type="email"
         name="mail"
-        id="userpass"
+        id="useremail"
         placeholder="Insert email address"
       />
       <input
@@ -46,12 +46,12 @@
         name=""
         id="username"
         class="textbox userfield"
-        placeholder="Insert your name"
+        placeholder="Insert your username"
       />
       <section>
         <article class="form-group">
           <label for=""></label>
-          <input type="date" />
+          <input type="date" id="userdob" />
         </article>
       </section>
       <input
@@ -60,7 +60,9 @@
         id="userpass"
         placeholder="Password"
       />
-      <a href="signin.html" class="btn btn-primary" role="button">Next</a>
+      <button class="btn btn-primary" id="signin" onclick="createUser()">
+        Next
+      </button>
       <a href="#" class="btn btn-primary drk" role="button"
         >Already have an account?</a
       >
@@ -79,6 +81,6 @@
         <p>Don't have an account yet? <span class="active">Sign-up</span></p>
       </section>
     </main>
-    <script src="" async defer></script>
+    <script src="scripts.js" async defer></script>
   </body>
 </html>
