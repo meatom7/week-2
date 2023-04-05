@@ -11,14 +11,7 @@ function createCurrentUser() {
         console.log("Verify succeeded");
         (function () { window.location.href = 'index.html'; })();
 };
-function checkCurrentUser() {
-    if (localStorage.getItem("myUser") === null) {
-        window.location.replace("signin.html");
-    } else {
-         myUser = JSON.parse(localStorage.getItem("myUser"))
-    }
-}
-// checkCurrentUser();
+
 
 function deleteData() {
     fetch('${fireBase}/da${jsonEX}', {
@@ -29,48 +22,32 @@ function deleteData() {
         .catch((err) => console.log(err));
 }
 function getData() {
-    fetch(`${fireBase}${jsonEX}`, {
+    fetch(`${fireBase}/Users${jsonEX}`, {
         method: "GET",
     })
         .then((res) => res.json())
         .then((data) => {
-            let userSpreadData = [data]
-            let myUserEmail = document.getElementById("useremail").value
-            if (Object.values(data).indexOf(myUserEmail) > -1) {
+            let spreadData = Object.values(data);
+            let myUserEmail = document.getElementById("useremail").value;
+            let usersarray = [];
+                Object.keys(spreadData).forEach(user => {
+                    usersarray.push(...Object.values(spreadData[user]))
+                });
+            if (usersarray.indexOf(myUserEmail) > -1) {
                 console.log("Approved", data);
                 createCurrentUser();
                 }
             else {
-                console.log("user not found");
+                console.log("user not found", Object.values(usersarray));
                 document.getElementById("useremail").style.color = "red";
                 document.getElementById("useremail").style.border = "solid";
-                document.getElementById("useremail").value = "try again"; 
-                console.log(Object.values(data));
-                console.log(myUserEmail);
+                document.getElementById("useremail").value = ""; 
             };
         },)
         .then((datas) => {console.log("well this still happens", datas)})
         .catch((err) => console.log(err));
 };
-function patchData() {
-    fetch('${fireBase}${jsonEX}', {
-        method: "PATCH",
-        body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            dob: userdob,
-            message: [{
-                id: 1,
-                time: currentDate,
-                post: post,
-            },
-            ],
-        })
-    })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err));
-};
+
 function postData() {
     fetch(`${fireBase}/Users${jsonEX}`, {
     })

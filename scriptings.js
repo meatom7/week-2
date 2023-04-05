@@ -9,14 +9,58 @@ function checkCurrentUser() {
 }
 // checkCurrentUser();
 function loadPosts() {
-    fetch(`${fireBase}/Users${jsonEX}`, {
+    fetch(`${fireBase}/Posts${jsonEX}`, {
     })
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-            let userSpreadData = { ...data };
+            let userSpreadData = {...data};
             console.log(userSpreadData);
-                Object.keys(data).forEach((user) => {
+            Object.keys(data).forEach((user) => {
+                if (user.email == myUser) {
+                    let userPost = `
+                <section class="profile_pic">
+                  <picture><img src="account-icon.png" alt="userpicture" /></picture>
+                </section>
+                <section class="ss">
+                  <section class="user_info">
+                    <span><h2></h2></span>
+                    <span><p>${user}</p><button class="edit" id="signin" onclick="patchData()">
+                    Next
+                  </button> </span>
+                  </section>
+                  <section class="content">
+                    <p></p>
+                  </section>
+                  <section class="reactions">
+                    <ul>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="chat.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="glass.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="Vector-like.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="Vector-upload.png" alt=""
+                        /></a>
+                      </li>
+                    </ul>
+                  </section>
+                </section>`;
+                    let node = document.createElement("article", { className: "card" });
+                    node.innerHTML = userPost;
+                    document.getElementById("main").appendChild(node);
+                } else {
                     let userPost = `
                 <section class="profile_pic">
                   <picture><img src="account-icon.png" alt="userpicture" /></picture>
@@ -54,9 +98,10 @@ function loadPosts() {
                     </ul>
                   </section>
                 </section>`;
-                    let node = document.createElement("article", {className:"card"});
+                    let node = document.createElement("article", { className: "card" });
                     node.innerHTML = userPost;
                     document.getElementById("main").appendChild(node);
+                }
                 } )();
         },)
         .catch((err) => console.log(err));
@@ -104,4 +149,20 @@ function createPost() {
     let node = document.createElement("article", {className:"card"});
     node.innerHTML = userPost;
     document.getElementById("main").appendChild(node);
-}
+};
+function patchData() {
+    let messageText = document.getElementById("message").value;
+    let username = localStorage.getItem("myUser");
+    fetch(`${fireBase}/Posts${jsonEX}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+            datePosted: currentDate,
+            postedBy: username,
+            dob: userdob,
+            message: messageText,
+        })
+    })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+};
