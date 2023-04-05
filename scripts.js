@@ -1,3 +1,5 @@
+let fireBase = "https://flutters-5fb55-default-rtdb.firebaseio.com/";
+let jsonEX = ".json";
 function verifyUser() {
     let username = document.getElementById("username").value;
     let usernumber = document.getElementById("usernumber").value;
@@ -23,12 +25,17 @@ function verifyUser() {
         return false;
     }
     return true;
-}
-
+};
 let sign = document.getElementById("signin");
 let userBase = [];
 function createUser() {
     if (verifyUser() == true) {
+        let createUser = {
+            email: document.getElementById("useremail").value,
+            name: document.getElementById("username").value,
+            number: document.getElementById("usernumber").value,
+            dob: document.getElementById("userdob").value,
+        };
         let username = document.getElementById("username").value;
         let usernumber = document.getElementById("usernumber").value;
         let useremail = document.getElementById("useremail").value;
@@ -44,77 +51,25 @@ function createUser() {
             userdob: userdob,
             useremail: useremail,
             usernumber: usernumber,
-
         });
-
-        localStorage.setItem("userBase", JSON.stringify(userBase));
-        document.getElementById("username").value = "";
-        document.getElementById("userdob").value = "";
-        document.getElementById("useremail").value = "";
-        document.getElementById("usernumber").value = "";
-        console.log("Verify succeeded");
-        window.location.href = 'signin.html'
+        fetch(`${fireBase}/Users${jsonEX}`, {
+            method: "POST",
+            body: JSON.stringify(createUser)
+        })
+            .then((res) => res.json())
+            .then(() => {
+                localStorage.setItem("userBase", JSON.stringify(userBase));
+                document.getElementById("username").value = "";
+                document.getElementById("userdob").value = "";
+                document.getElementById("useremail").value = "";
+                document.getElementById("usernumber").value = "";
+                console.log("Verify succeeded");
+            })
+            .then(() => {window.location.href = 'signin.html';})
+            .catch((err) => console.log(err));
     }
 
     else {
         console.log("Verify failed")
     };
-};
-function getData() {
-    fetch(`${fireBase} ${jsonEX}`,)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-            let userSpreadData = { ...data };
-            let myUserEmail = document.getElementById("useremail").value;
-            if (userSpreadData.find(myUserEmail) !== undefined) {
-                createCurrentUser();
-                Object.keys(userSpreadData).forEach((user) => {
-                    let userPost = `
-                <section class="profile_pic">
-                  <picture><img src="account-icon.png" alt="userpicture" /></picture>
-                </section>
-                <section class="ss">
-                  <section class="user_info">
-                    <span><h2>${firstName}</h2></span>
-                    <span><p>${username}</p> </span>
-                  </section>
-                  <section class="content">
-                    <p>${text}</p>
-                    <section>
-                      <a href="" class="ctn"><img src="${userImg}" alt="filler" /></a>
-                    </section>
-                  </section>
-                  <section class="reactions">
-                    <ul>
-                      <li>
-                        <a name="" id="" class="btn btn-icon" href="#" role="button"
-                          ><img src="chat.png" alt=""
-                        /></a>
-                      </li>
-                      <li>
-                        <a name="" id="" class="btn btn-icon" href="#" role="button"
-                          ><img src="glass.png" alt=""
-                        /></a>
-                      </li>
-                      <li>
-                        <a name="" id="" class="btn btn-icon" href="#" role="button"
-                          ><img src="Vector-like.png" alt=""
-                        /></a>
-                      </li>
-                      <li>
-                        <a name="" id="" class="btn btn-icon" href="#" role="button"
-                          ><img src="Vector-upload.png" alt=""
-                        /></a>
-                      </li>
-                    </ul>
-                  </section>
-                </section>`;
-                    let newArticle = document.createElement("article", { className: "card" });
-                    newArticle.innerHTML = userPost
-                    document.querySelector("main").appendChild(userPost)
-                }(), );
-            } else if (userSpreadData.find(myUserEmail) == undefined) {console.log("user not found");}
-        },)
-        .catch((err) => console.log(err));
 };
