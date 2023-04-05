@@ -1,6 +1,13 @@
 let fireBase = "https://flutters-5fb55-default-rtdb.firebaseio.com/";
 let jsonEX = ".json";
-
+function checkCurrentUser() {
+    if (localStorage.getItem("myUser") === null) {
+        window.location.replace("signin.html");
+    } else {
+         myUser = JSON.parse(localStorage.getItem("myUser"))
+    }
+}
+// checkCurrentUser();
 function loadPosts() {
     fetch(`${fireBase}/Users${jsonEX}`, {
     })
