@@ -60,3 +60,61 @@ function createUser() {
         console.log("Verify failed")
     };
 };
+function getData() {
+    fetch(`${fireBase} ${jsonEX}`,)
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+            let userSpreadData = { ...data };
+            let myUserEmail = document.getElementById("useremail").value;
+            if (userSpreadData.find(myUserEmail) !== undefined) {
+                createCurrentUser();
+                Object.keys(userSpreadData).forEach((user) => {
+                    let userPost = `
+                <section class="profile_pic">
+                  <picture><img src="account-icon.png" alt="userpicture" /></picture>
+                </section>
+                <section class="ss">
+                  <section class="user_info">
+                    <span><h2>${firstName}</h2></span>
+                    <span><p>${username}</p> </span>
+                  </section>
+                  <section class="content">
+                    <p>${text}</p>
+                    <section>
+                      <a href="" class="ctn"><img src="${userImg}" alt="filler" /></a>
+                    </section>
+                  </section>
+                  <section class="reactions">
+                    <ul>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="chat.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="glass.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="Vector-like.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="Vector-upload.png" alt=""
+                        /></a>
+                      </li>
+                    </ul>
+                  </section>
+                </section>`;
+                    let newArticle = document.createElement("article", { className: "card" });
+                    newArticle.innerHTML = userPost
+                    document.querySelector("main").appendChild(userPost)
+                }(), );
+            } else if (userSpreadData.find(myUserEmail) == undefined) {console.log("user not found");}
+        },)
+        .catch((err) => console.log(err));
+};
