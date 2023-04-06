@@ -3,8 +3,20 @@ let jsonEX = ".json";
 let current = new Date();
 let cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
 let cTime = current.getHours() + ":" + current.getMinutes();
-let currentDate = cDate + ' ' + cTime;
+let dateTime = cDate + ' ' + cTime;
 console.log(dateTime);
+let myUser = localStorage.getItem("myUser");
+
+function createCurrentUser() {
+  let useremail = "";
+  let myUser = [];
+  if (localStorage.getItem("myUser") == null) {
+      myUser = myUserEmail
+  } else {localStorage.removeItem("myUser")}
+  localStorage.setItem("myUser", JSON.stringify(useremail));
+  console.log("Verify succeeded");
+  (function () { window.location.href = 'index.html'; })();
+};
 function checkCurrentUser() {
     if (localStorage.getItem("myUser") === null) {
         window.location.replace("signin.html");
@@ -18,24 +30,33 @@ function loadPosts() {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
+            // console.log(data, 'data')
             let userSpreadData = {...data};
-            console.log(userSpreadData);
+            // console.log(userSpreadData);
             Object.keys(data).forEach((user) => {
-                if (user.email == myUser) {
+              // console.log(userSpreadData[user], 'user')
+              let userPostObj = userSpreadData[user];
+              // console.log(myUser, 'myUser')
+                if (userPostObj.postedBy === myUser) {
                     let userPost = `
                 <section class="profile_pic">
+                <span id='newID' style='display: none;'>${user}</span>
                   <picture><img src="account-icon.png" alt="userpicture" /></picture>
                 </section>
                 <section class="ss">
                   <section class="user_info">
                     <span><h2></h2></span>
-                    <span><p>${user}</p><button class="edit" id="signin" onclick="patchData()">
-                    Next
-                  </button> </span>
+                    <span><p>${userPostObj.postedBy}</p><button class="edit" id="signin" onclick="patchData('${fireBase}/Posts/${user}${jsonEX}')">
+                    Edit
+                  </button> 
+                  <button class="edit" id="signin" onclick="deleteData('${fireBase}/Posts/${user}${jsonEX}')">
+                    Delete
+                  </button></span>
                   </section>
                   <section class="content">
-                    <p></p>
+                  <section
+                    <p>${userPostObj.message}</p>
+                    <input type="text" id="newMessage" style='display: none;' class="flute" placeholder="New message text here">
                   </section>
                   <section class="reactions">
                     <ul>
@@ -68,15 +89,16 @@ function loadPosts() {
                 } else {
                     let userPost = `
                 <section class="profile_pic">
+                <span id='newID' style='display: none;'>${user}</span>
                   <picture><img src="account-icon.png" alt="userpicture" /></picture>
                 </section>
                 <section class="ss">
                   <section class="user_info">
                     <span><h2></h2></span>
-                    <span><p></p>${user} </span>
+                    <span><p></p> ${userPostObj.postedBy} </span>
                   </section>
                   <section class="content">
-                    <p></p>
+                    <p> ${userPostObj.message} </p>
                   </section>
                   <section class="reactions">
                     <ul>
@@ -107,7 +129,7 @@ function loadPosts() {
                     node.innerHTML = userPost;
                     document.getElementById("main").appendChild(node);
                 }
-                } )();
+                } );
         },)
         .catch((err) => console.log(err));
 };
@@ -123,6 +145,9 @@ function createPost() {
       <section class="user_info">
         <span><h2></h2></span>
         <span><p></p>username </span>
+        <span><p>${username}</p><button class="edit" id="signin" onclick="patchData()">
+        Edit
+      </button> </span>
       </section>
       <section class="content">
         <p>${messageText}</p>
@@ -156,7 +181,7 @@ function createPost() {
     node.innerHTML = userPost;
   document.getElementById("main").appendChild(node);
     let postContent = {
-      datePosted: currentDate,
+      datePosted: dateTime,
       postedBy: username,
       message: messageText,
   }
@@ -171,13 +196,14 @@ function createPost() {
         })
         .catch((err) => console.log(err));
 };
-function patchData() {
-    let messageText = document.getElementById("message").value;
+function patchData(url) {
+    document.getElementById("newMessage").style.display = "flex";
+    let messageText = document.getElementById("newMessage").value;
     let username = localStorage.getItem("myUser");
-    fetch(`${fireBase}/Posts${jsonEX}`, {
+    fetch(`${url}`, {
         method: "PATCH",
         body: JSON.stringify({
-            datePosted: currentDate,
+            datePosted: dateTime,
             postedBy: username,
             message: messageText,
         })
@@ -185,4 +211,14 @@ function patchData() {
         .then((res) => res.json())
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
+};
+function deleteData(url) {
+  let messageText = document.getElementById("message").value;
+  let username = localStorage.getItem("myUser");
+  fetch(`${url}`, {
+      method: "DELETE",
+  })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
 };

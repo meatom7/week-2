@@ -4,6 +4,7 @@ let jsonEX = ".json";
 function createCurrentUser() {
         let useremail = document.getElementById("useremail").value;
         let myUser = [];
+        let myUserEmail = document.getElementById("useremail").value;
         if (localStorage.getItem("myUser") == null) {
             myUser = myUserEmail
         } else {localStorage.removeItem("myUser")}
@@ -11,8 +12,6 @@ function createCurrentUser() {
         console.log("Verify succeeded");
         (function () { window.location.href = 'index.html'; })();
 };
-
-
 function deleteData() {
     fetch('${fireBase}/da${jsonEX}', {
         method: "DELETE",
@@ -20,7 +19,7 @@ function deleteData() {
         .then((res) => res.json())
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
-}
+};
 function getData() {
     fetch(`${fireBase}/Users${jsonEX}`, {
         method: "GET",
@@ -47,7 +46,6 @@ function getData() {
         .then((datas) => {console.log("well this still happens", datas)})
         .catch((err) => console.log(err));
 };
-
 function postData() {
     fetch(`${fireBase}/Users${jsonEX}`, {
     })
@@ -109,7 +107,7 @@ function createNewPost() {
     if (verifyUser === true) {
         let createMessage 
     }
-}
+};
 function getDatas() {
     fetch(`${fireBase}${jsonEX}`)
         .then((res) => {
