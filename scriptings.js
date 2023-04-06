@@ -1,5 +1,10 @@
 let fireBase = "https://flutters-5fb55-default-rtdb.firebaseio.com/";
 let jsonEX = ".json";
+let current = new Date();
+let cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
+let cTime = current.getHours() + ":" + current.getMinutes();
+let currentDate = cDate + ' ' + cTime;
+console.log(dateTime);
 function checkCurrentUser() {
     if (localStorage.getItem("myUser") === null) {
         window.location.replace("signin.html");
@@ -149,6 +154,17 @@ function createPost() {
     let node = document.createElement("article", {className:"card"});
     node.innerHTML = userPost;
     document.getElementById("main").appendChild(node);
+    fetch(`${fireBase}/Users${jsonEX}`, {
+        method: "POST",
+        body: JSON.stringify(createUser)
+    })
+        .then((res) => res.json())
+        .then(() => {
+            document.getElementById("message").value = "";
+            console.log("Verify succeeded");
+        })
+        .then(() => {window.location.href = 'signin.html';})
+        .catch((err) => console.log(err));
 };
 function patchData() {
     let messageText = document.getElementById("message").value;
