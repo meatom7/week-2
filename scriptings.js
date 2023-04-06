@@ -114,6 +114,7 @@ function loadPosts() {
 loadPosts();
 function createPost() {
     let messageText = document.getElementById("message").value;
+    let username = localStorage.getItem("myUser");
     let userPost = `
     <section class="profile_pic">
       <picture><img src="account-icon.png" alt="userpicture" /></picture>
@@ -153,17 +154,21 @@ function createPost() {
     </section>`;
     let node = document.createElement("article", {className:"card"});
     node.innerHTML = userPost;
-    document.getElementById("main").appendChild(node);
-    fetch(`${fireBase}/Users${jsonEX}`, {
+  document.getElementById("main").appendChild(node);
+    let postContent = {
+      datePosted: currentDate,
+      postedBy: username,
+      message: messageText,
+  }
+    fetch(`${fireBase}/Posts${jsonEX}`, {
         method: "POST",
-        body: JSON.stringify(createUser)
+        body: JSON.stringify(postContent)
     })
         .then((res) => res.json())
         .then(() => {
             document.getElementById("message").value = "";
             console.log("Verify succeeded");
         })
-        .then(() => {window.location.href = 'signin.html';})
         .catch((err) => console.log(err));
 };
 function patchData() {
@@ -174,7 +179,6 @@ function patchData() {
         body: JSON.stringify({
             datePosted: currentDate,
             postedBy: username,
-            dob: userdob,
             message: messageText,
         })
     })

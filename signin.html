@@ -31,7 +31,7 @@
       <input
         type="text"
         name=""
-        id="userpass"
+        id="useremail"
         class="textbox userfield"
         placeholder="Phone, email, username"
       />
@@ -41,7 +41,9 @@
         id="userpass"
         placeholder="Password"
       />
-      <a href="index.html" class="btn btn-primary" role="button">Next</a>
+      <button class="btn btn-primary" id="signin" onclick="getData()">
+        Next
+      </button>
       <a href="#" class="btn btn-primary drk" role="button">Forgot Password?</a>
       <section class="socials">
         <a href="#" class="btn btn-secondary" role="button"
@@ -63,6 +65,7 @@
         </p>
       </section>
     </main>
-    <script src="" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="scripting.js" async defer></script>
   </body>
 </html>

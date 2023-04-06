@@ -1,0 +1,43 @@
+{
+    "Users": {
+        "dsaffgfsdfs":{
+            "username":"TweetGod",
+            "email": "abc123@yahoo.com",
+            "postCount":"1"
+        },
+        "hngbnbfbsdv":{
+            "username":"EpicUser",
+            "email": "EpicUser@gmail.com",
+            "postCount":"1"
+        },
+        "vbrtgxcaseer":{
+        },
+        "dvcvwrwexxc":{
+        },
+        "vcvrwefvxab":{
+        }
+    },
+    "Posts":{
+        "ddfjknaskjdn":{
+            "message":"This is my first tweet",
+            "postedBy":"TweetGod",
+            "datePosted":"02/17/2023",
+            "likeCount":"15"
+        },
+        "ntrthdsgdsvsd":{
+            "message":"Front End Dev Is Amazing",
+            "postedBy":"EpicUser",
+            "datePosted":"02/17/2023",
+            "image": "someUrl",
+            "likeCount":"50"
+        },
+        "nhjyjhgjfjrt":{
+  
+        },
+        "cbwraffjydfhe":{
+        },
+        "vcsvrhjuyts":{
+  
+        }
+    }
+}
