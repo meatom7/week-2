@@ -30,13 +30,10 @@ function loadPosts() {
     })
         .then((res) => res.json())
         .then((data) => {
-            // console.log(data, 'data')
             let userSpreadData = {...data};
-            // console.log(userSpreadData);
             Object.keys(data).forEach((user) => {
-              // console.log(userSpreadData[user], 'user')
               let userPostObj = userSpreadData[user];
-              // console.log(myUser, 'myUser')
+              console.log(myUser, 'myUser')
                 if (userPostObj.postedBy === myUser) {
                     let userPost = `
                 <section class="profile_pic">
@@ -44,19 +41,22 @@ function loadPosts() {
                   <picture><img src="account-icon.png" alt="userpicture" /></picture>
                 </section>
                 <section class="ss">
-                  <section class="user_info">
+                  <section class="user_info" style="width: 100%">
                     <span><h2></h2></span>
-                    <span><p>${userPostObj.postedBy}</p><button class="edit" id="signin" onclick="patchData('${fireBase}/Posts/${user}${jsonEX}')">
+                    <span style='display: inline-flex; width: 100%'><p>${userPostObj.postedBy}</p><button style="position: relative; left: 75%;" class="edit" id="signin" onclick="expandEdit()">
                     Edit
                   </button> 
-                  <button class="edit" id="signin" onclick="deleteData('${fireBase}/Posts/${user}${jsonEX}')">
+                  <button class="edit" id="signin" style="position: relative; left: 75%;" onclick="deleteData('${fireBase}/Posts/${user}${jsonEX}')">
                     Delete
                   </button></span>
                   </section>
                   <section class="content">
-                  <section
-                    <p>${userPostObj.message}</p>
-                    <input type="text" id="newMessage" style='display: none;' class="flute" placeholder="New message text here">
+                  <section>
+                    <p id="posted">${userPostObj.message}</p>
+                    <input type="text" id="newMessage" style='display: none; width: 85%' class="flute" placeholder="New message text here"> 
+                    <button class="edit" id="sub" style="display: none; position: relative; left: 75%;" onclick="patchData('${fireBase}/Posts/${jsonEX}')">
+                      Submit
+                    </button>
                   </section>
                   <section class="reactions">
                     <ul>
@@ -138,54 +138,62 @@ function createPost() {
     let messageText = document.getElementById("message").value;
     let username = localStorage.getItem("myUser");
     let userPost = `
-    <section class="profile_pic">
-      <picture><img src="account-icon.png" alt="userpicture" /></picture>
-    </section>
-    <section class="ss">
-      <section class="user_info">
-        <span><h2></h2></span>
-        <span><p></p>username </span>
-        <span><p>${username}</p><button class="edit" id="signin" onclick="patchData()">
-        Edit
-      </button> </span>
-      </section>
-      <section class="content">
-        <p>${messageText}</p>
-      </section>
-      <section class="reactions">
-        <ul>
-          <li>
-            <a name="" id="" class="btn btn-icon" href="#" role="button"
-              ><img src="chat.png" alt=""
-            /></a>
-          </li>
-          <li>
-            <a name="" id="" class="btn btn-icon" href="#" role="button"
-              ><img src="glass.png" alt=""
-            /></a>
-          </li>
-          <li>
-            <a name="" id="" class="btn btn-icon" href="#" role="button"
-              ><img src="Vector-like.png" alt=""
-            /></a>
-          </li>
-          <li>
-            <a name="" id="" class="btn btn-icon" href="#" role="button"
-              ><img src="Vector-upload.png" alt=""
-            /></a>
-          </li>
-        </ul>
-      </section>
-    </section>`;
+                <section class="profile_pic">
+                <span id='newID' style='display: none;'>${myUser}</span>
+                  <picture><img src="account-icon.png" alt="userpicture" /></picture>
+                </section>
+                <section class="ss">
+                  <section class="user_info" style="width: 100%">
+                    <span><h2></h2></span>
+                    <span style='display: inline-flex; width: 100%'><p>${myUser}</p><button style="position: relative; left: 75%;" class="edit" id="signin" onclick="expandEdit()">
+                    Edit
+                  </button> 
+                  <button class="edit" id="signin" style="position: relative; left: 75%;" onclick="deleteData('${fireBase}/Posts/${myUser}${jsonEX}')">
+                    Delete
+                  </button></span>
+                  </section>
+                  <section class="content">
+                  <section>
+                    <p id="posted">${messageText}</p>
+                    <input type="text" id="newMessage" style='display: none; width: 85%' class="flute" placeholder="New message text here"> 
+                    <button class="edit" id="sub" style="display: none; position: relative; left: 75%;" onclick="patchData('${fireBase}/Posts/${jsonEX}')">
+                      Submit
+                    </button>
+                  </section>
+                  <section class="reactions">
+                    <ul>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="chat.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="glass.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="Vector-like.png" alt=""
+                        /></a>
+                      </li>
+                      <li>
+                        <a name="" id="" class="btn btn-icon" href="#" role="button"
+                          ><img src="Vector-upload.png" alt=""
+                        /></a>
+                      </li>
+                    </ul>
+                  </section>
+                </section>`;
     let node = document.createElement("article", {className:"card"});
     node.innerHTML = userPost;
-  document.getElementById("main").appendChild(node);
+  document.getElementById("main").prepend(node);
     let postContent = {
       datePosted: dateTime,
       postedBy: username,
       message: messageText,
   }
-    fetch(`${fireBase}/Posts${jsonEX}`, {
+    fetch(`${fireBase}/Posts/${jsonEX}`, {
         method: "POST",
         body: JSON.stringify(postContent)
     })
@@ -196,8 +204,11 @@ function createPost() {
         })
         .catch((err) => console.log(err));
 };
+function expandEdit() {
+  document.getElementById("newMessage").style.display = "flex";
+  document.getElementById("sub").style.display = "flex";
+}
 function patchData(url) {
-    document.getElementById("newMessage").style.display = "flex";
     let messageText = document.getElementById("newMessage").value;
     let username = localStorage.getItem("myUser");
     fetch(`${url}`, {
@@ -209,16 +220,22 @@ function patchData(url) {
         })
     })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        document.getElementById("posted").innerHTML = messageText;
+        document.getElementById("newMessage").style.display = "none";
+        document.getElementById("sub").style.display = "none";
+      })
         .catch((err) => console.log(err));
 };
 function deleteData(url) {
   let messageText = document.getElementById("message").value;
   let username = localStorage.getItem("myUser");
   fetch(`${url}`, {
-      method: "DELETE",
+    method: "DELETE",
   })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
+    .then((res) => res.json())
+    .then((data) => {console.log(data);
+    document.getElementById("newMessage").style.display = "flex";})
       .catch((err) => console.log(err));
 };
