@@ -193,6 +193,7 @@ function createPost() {
       postedBy: username,
       message: messageText,
   }
+  let newId = { postContent };
     fetch(`${fireBase}/Posts/${jsonEX}`, {
         method: "POST",
         body: JSON.stringify(postContent)
@@ -229,13 +230,11 @@ function patchData(url) {
         .catch((err) => console.log(err));
 };
 function deleteData(url) {
-  let messageText = document.getElementById("message").value;
-  let username = localStorage.getItem("myUser");
   fetch(`${url}`, {
     method: "DELETE",
   })
     .then((res) => res.json())
     .then((data) => {console.log(data);
-    document.getElementById("newMessage").style.display = "flex";})
+    document.getElementById("newMessage").style.display = "none";})
       .catch((err) => console.log(err));
 };
